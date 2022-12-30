@@ -1,0 +1,352 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    scroll-behavior: smooth;
+  }
+
+
+.container{
+    background-color: #315cbc;
+}
+
+#header{
+    background-color: white;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+#header_logo{
+    display: block;    
+}
+
+#footer{
+    background-color: white;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+#footer_logo{
+    display: block;    
+}
+
+@media (min-width: 600px) {
+    #parent {
+      display: flex;
+    }
+    #child1 {
+      flex-grow: 1;
+      width: 100%;            
+    }
+    #child2 {
+      flex-grow: 1;
+      text-align : center;    
+      width: 100%; 
+    }
+}
+
+#catch{
+
+    margin-left: 10%;
+    font-size:  4em;
+    margin-top: 5%;
+}
+
+#study_man{
+    margin-top: 5%;
+
+    width: 60%;
+}
+
+.white{
+    color: white;
+}
+
+.yellow{
+    color: #fffa5a;
+}
+
+#sen1{
+    margin-left: 10%;
+    font-size: 1em;
+    font-size: 1.5em;
+    margin-top: 5%;
+    line-height: 1.5;
+}
+
+.sen2{
+    font-size: 1.5em;
+    line-height: 2;
+}
+
+#al{
+    
+
+
+    position: absolute;
+    top: 90%;
+    left: 50%;
+
+
+    width: 24px;
+    height: 24px;
+    border-left: 5px solid #fff;
+    border-bottom: 5px solid #fff;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-animation: sdb 1.5s infinite;
+    animation: sdb 1.5s infinite;
+    box-sizing: border-box;
+  }
+  
+  @-webkit-keyframes sdb {
+    0% {
+      -webkit-transform: rotate(-45deg) translate(0, 0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: rotate(-45deg) translate(-20px, 20px);
+      opacity: 0;
+    }
+  }
+  @keyframes sdb {
+    0% {
+      transform: rotate(-45deg) translate(0, 0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(-45deg) translate(-20px, 20px);
+      opacity: 0;
+    }
+  }
+
+
+#parent2 {
+    display: flex;
+
+    font-size: 1.5em;
+    line-height: 1.5;
+}
+#child21 {
+    flex-grow: 1;
+    width: 100%; 
+    text-align : center;
+    
+}
+#child22 {
+    flex-grow: 1;
+    text-align : center;    
+    width: 100%; 
+
+}
+#child23 {
+    flex-grow: 1;
+    text-align : center;    
+    width: 100%; 
+
+}
+#child24 {
+    flex-grow: 1;
+    text-align : center;    
+    width: 100%; 
+
+}
+
+.heiretu4{
+    width: 80%;
+    text-align: center;
+    border-radius:50%;
+    background-color: rgb(211, 211, 211);
+}
+
+
+
+
+.big{
+    font-size: 4em;
+}
+
+.right{
+    text-align: right;
+    margin-right: 5%;
+    margin-top: 5%;
+}
+
+.left{
+    text-align: left;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+.center{
+    margin-top: 5%;
+    text-align: center;
+}
+
+.button29 a {
+
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+    background-color: #cccccc;
+    border-radius: 50vh;
+    transition: 0.3s;
+    text-align: center;
+  }
+  
+  .button29 a::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-top: 3px solid #333;
+    border-left: 3px solid #333;
+    transform: rotate(45deg);
+    transition: 0.3s;
+  }
+  
+  .button29 span {
+    width: 0px;
+    height: 0px;
+    visibility: hidden;
+  }
+  
+  .button29 a:hover {
+    background-color: #333333;
+  }
+  
+  .button29 a:hover::after {
+    border-top: 3px solid #f2f2f2;
+    border-left: 3px solid #f2f2f2;
+  }
+
+#topb{
+    text-align: right;
+}
+
+/*ここからは初心者ページに関するstatic*/
+
+.example2{
+    display: flex;
+}
+.example2 label{
+    display: block;
+    width: 150px;
+    background: #c8eac3;
+    color: #000;
+    padding: 10px;
+    margin: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 30px;
+    cursor: pointer;
+}
+.example2 input:checked+label{
+    background: #1a720d;
+    color: #FFF;
+}
+.example2 input{
+    display: none;
+}
+
+/*ここからは職業診断*/
+
+#question_text{
+    color: #fff;
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+
+#choice{
+    text-align: center;
+}
+
+#choice button{
+    background-color: #f9ba53;
+    width: 40%;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-bottom: 3%;
+    border: none;
+    border-radius:90px;
+}
+
+.btn{
+    font-size: 1.5em;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+
+.example3{
+    border: 1px solid rgb(255, 255, 255);
+    width: 80%;
+    margin: 10px 10%;
+    /*変更*/background: linear-gradient(to right,#f9ba53,#f9ba53);
+    /*追加*/display: flex;
+    /*追加*/justify-content: flex-end;
+    
+}
+
+
+/*
+.example3>div{
+    height: 10px;
+    background: rgb(255, 255, 255);
+    width:10%;
+}
+*/
+
+#bbb{
+    height: 10px;
+    /*変更*/background: rgb(255, 255, 255);
+    width:100%;
+}
+
+#nnum{
+    text-align: center;
+    margin-top: 2%;
+    padding-bottom: 2%;
+    font-size: 1.5em;
+}
+
+#resultsendiv{
+    text-align: center;
+    font-size: 2em;
+}
+
+.resultchoice{
+    background-color: #f9ba53;
+    width: 50%;
+    font-size: 1.5em;
+    margin-bottom: 3%;
+    border: none;
+    border-radius:90px;
+
+    /*
+    padding-top: 2%;
+    padding-bottom: 2%;
+    */
+}
+
+#resultchoicediv{
+    text-align: center;
+}
+
+.form{
+    text-align: center;
+}
