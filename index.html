@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="test.js"></script>
   </head>
-  <body onload="point_display();">
+  <body>
     <div class="container">
       <div id="header">
         <img src="logo.png" width="20%" id="header_logo">
@@ -45,13 +45,12 @@
         </div>
 
         <div id="resultchoicediv">
-          <form action="{% url 'senior' %}" method="POST" class="form">
-            {% csrf_token %}
+
             <div id="result1" class="resultchoice"></div>
             <div id="result2" class="resultchoice"></div>
             <div id="result3" class="resultchoice"></div>
             <div id="result4" ></div>
-          </form>
+
         </div>
       </div>
 
