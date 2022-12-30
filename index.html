@@ -4,7 +4,6 @@
   <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="test.js"></script>
   </head>
   <body>
     <div class="container">
@@ -56,4 +55,729 @@
 
     </div>
   </body>
+<script>
+
+    document.bgColor = "FFFFFFF";
+    document.fgColor = "#000000"; //いきてる
+
+    //最初の14問は二択なのでanswer1とanswer4を見えなくしておく
+    document.getElementById('ans1').style.display = "none";
+    document.getElementById('ans4').style.display = "none";
+
+    //結果部分も最初は消しておく
+    document.getElementById('resultsen').style.display = "none";
+
+    //各項目の点数の初期設定
+    /*
+    let nw = 0;
+    let sb = 0;
+    let db = 0;
+    let sk = 0;
+    let sye = 0;
+    let p = 0;
+    let ke = 0;
+    let te = 0;
+    let se = 0;
+    let ds = 0;
+    let d3 = 0;
+    let ek = 0;
+    let ui = 0;
+    let gd = 0;
+    let w = 0;
+    let gk = 0;
+    */
+
+    //各項目の得点数を記録・格納する配列
+    /*
+    var point_array111 =
+    {nw: 0,sb:0,db:0,sk:0,sye:0,p:0,ke:0,te:0,se:0,ds:0,d3:0,ek:0,ui:0,gd:0,w:0,gk:0};
+    */
+
+    //職業項目をkey名として格納する配列
+    var goal_array = ["nw","sb","db","sk","sye","p","ke","te","se","ds","d3","ek","ui","gd","w","gk"];
+
+    //職業項目ごとの得点数を記録・格納する配列
+    var point_array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+    //点数をテスト画面に反映させる関数
+    function point_display(){
+      var stockList = '';
+      for (var i=0; i<point_array.length;i++){
+        stockList += '<li>'+ goal_array[i] + ':'+ point_array[i] +'</li>';
+      } 
+      document.getElementById('stock').innerHTML = stockList;
+    }
+
+    //問題番号の初期設定
+    let now_question_number = 1; //問題番号を格納する変数
+    document.getElementById('question_number').textContent = now_question_number; //まずは問題番号は0
+
+    //問題文を格納する配列
+    var question_text_array = 
+    ["Q1.地道な努力は比較的得意だ",
+    "Q2.喜んでくれそうなプレゼントを考えるのが好きだ",
+    "Q3.自分の考えを分かりやすく伝えるのが比較的得意だ",
+    "Q4.新しい集団の中で仲良くなるのが得意なほうだ",
+    "Q5.少しでも楽な方法や抜け道を見つけるのが得意だ",
+    "Q6.マナーや決まりはきっちり守る方だ",
+    "Q7.自分のアイデアをたくさんの人に見てもらいたい",
+    "Q8.プログラミングを仕事にすることに興味がある",
+    "Q9.たくさんの人に見てもらえるような、形に残るものを作る仕事がしたい",
+    "Q10.自分のやりがいのためなら努力も厭わない",
+    "Q11.自分は知的探求心が強いほうだと思う",
+    "Q12.目立たなくても、人々の生活を支えるような仕事に興味がある",
+    "Q13.自分はどちらかというと、細かいことが気になる完璧主義な人間だ",
+    "Q14.機械の内部の仕組みや構造に興味がある（機械が好き）",
+    "Q15.あなたに向いていると思うアルバイトは？",
+    "Q16.大人数の前でチーム成果物を発表することに。あなたの役目は？",
+    "Q17.次の内一番自信があるのは？",
+    "Q18.次の内最も操作に自信があるものは？",
+    "Q19.休日一人家でやるなら？",
+    "Q20.授業の宿題がわからなくなった時に一番よくすることは？",
+    "Q21.テスト期間",
+    "Q22.一番近いあなたの強みは？",
+    "Q23.あなたの１番得意な科目は？",
+    "Q24.あなたが１つの作品を作る時に近いものは？",];
+
+    //選択肢文を格納する配列
+    var choice_text_array =
+    [["飲食店キッチン","飲食店ホール","データ打ち込み","Uber"],
+    ["前に立って発表","原稿の作成","原稿チェックと図表の作成","スライドのデザイン"],
+    ["体力","美的センス","集中力","コミュ力"],
+    ["デザインソフト","プログラミング","資料作成","データ収集、分析"],
+    ["Youtube、アニメ","ゲーム","読書、漫画","ネットサーフィン"],
+    ["人に聞く","ネットで調べる","教科書を何度も読む","ひたすら考える"],
+    ["計画的に勉強","前日に詰め込み","ほぼノー勉で平均点超え","あまり勉強せず、結果も悪い"],
+    ["人の立場にたって考えられる","計画性、時間管理","問題解決力","論理的思考"],
+    ["長文読解","数学","英文読解","作文"],
+    ["教科書や説明書をひたすら見て作る","できるだけ最低限の努力で作りたい","細かなところまでこだわりたい","とにかく他と違うものを作り個性を出したい"],
+    ];
+
+
+    //職業名
+    var profession = {
+      nw:"ネットワークエンジニア",
+      sb:"サーバーエンジニア",
+      db:"データベースエンジニア",
+      sk:"セキュリティエンジア",
+      sye:"システムエンジニア",
+      p:"プログラマー",
+      ke:"組み込みエンジニア",
+      te:"テストエンジニア",
+      se:"サービスエンジニア",
+      ds:"データ・サイエンティスト",
+      d3:"3DCGクリエーター",
+      ek:"映像クリエイター",
+      ui:"UI/UXデザイナー",
+      gd:"グラフィックデザイナー",
+      w:"WEBデザイナー",
+      gk:"ゲームクリエイター",
+    }
+
+
+    //職業の説明文を格納
+    var explation = {
+      nw:"ネットワークエンジニアの仕事は、ネットワークの設計から要件定義、構築、保守・監視、運用など多岐にわたりますが、大きく次の4つに分類することができます。1つ目はクライアントの要件に沿ったネットワークの「設計」、2つ目は設計の仕様に沿って、実際にネットワーク機器を接続する「構築」、3つ目は利用開始後に管理を行う「運用」、そして最後がトラブル時に復旧対応をする「保守」です。",
+      sb:"サーバーエンジニアは、サーバーの設計・構築・管理を行い、サーバーを適切に稼働させる事が仕事です。 仕事は大きく分けると「コンピューターシステムを運用するサーバー機器の構築作業」「サーバーの運用・保守作業」の2つです。",
+      db:"データベースエンジニアは、データベースの設計・開発、管理、運用を行います。仕事の領域は幅広く、「データベースの開発・設計」「データベースの管理」「データベースの運用」の3つの分野に分けることができます。",
+      sk:"セキュリティエンジニアは、その名の通り情報セキュリティを専門に担当するエンジニアです。セキュリティに配慮したシステム設計や構築、システム運用、サイバー攻撃を未然に防ぐための調査や改善などを行います。",
+      sye:"システムエンジニアの仕事は、顧客のヒアリングを通じて最適なシステムを設計することです。具体的には、「要求分析・要件定義」「基本設計」「詳細設計」といった業務があります。また、システムをテストするのもシステムエンジニアの大事な仕事です。",
+      p:"プログラマーは、コンピューターを動かす「プログラム言語」を用いてさまざまなシステムやソフトウェアを作るための「プログラミング」を行う仕事です。システムエンジニアが作った設計書を基にプログラムを行っていきます。",
+      ke:"家電や工業機器などの製品を実際に動かすプログラムである組み込みソフトウェアを開発する仕事です。基本的にはソフトウェアの設計・開発がメインですが、案件によってはハードウェアの設計も行います。テストや運用・保守は、駆け出しの組み込みエンジニアが担当するケースが多い傾向にあります。",
+      te:"ソフトウェア開発におけるテスト計画の作成・テストの実施・テスト結果の確認と分析などを担当するエンジニアです。近年では、ソフトウェアに対する品質要求の高まりや、セキュリティ要件の高度化などから、テスト技法に詳しいエンジニアがテストエンジニアとして担当するようになってきています。",
+      se:"機械製品の保守・メンテナンスを行う職業です。コピー機・PCのような身近な製品から、サーバ機器・ソーラーシステム・医療機器など、サービスエンジニアによるアフターフォローが必要な機械製品は多岐に渡ります。",
+      ds:"データ・サイエンティストとは、さまざまな意思決定の局面において、データにもとづいて合理的な判断を行えるように意思決定者をサポートする人のことです。 統計解析やITのスキルに加えて、ビジネスや市場トレンドなど幅広い知識が求められます。",
+      d3:"奥行きのある空間や立体をコンピューターで描画し、リアルな仮想空間のビジュアルを画像や映像で作成。実写では不可能な時代背景や架空の世界を現実に見えるようにキャラクターのモデリング、動き、風景、光や影の演出、SEなど形状を決定づける効果で現実感を出していく仕事です。",
+      ek:"映像クリエイターとは、映像制作に携わる仕事の総称です。業界は多岐にわたっており、テレビ番組、CM、アニメーション、映画、ミュージックビデオ、Webコンテンツ、ゲームなどさまざまです。映像クリエイターといっても、映像の企画・制作を行う制作系と動画の編集や加工を行う技術系に分かれています。",
+      ui:"UIデザイナーとは、「ユーザーと製品やサービスとの接触を円滑にするデザイン」「ユーザーにとって使いやすいデザイン」を実現するのが仕事です。UXデザイナーとは、ユーザーにとって「楽しい」や「心地良い」と感じてもらえるデザインを作り、体感してもらうことが仕事となります。",
+      gd:"クライアントの意向に沿って紙媒体やWEBサイトに掲載する広告・パッケージを制作したり、ゲーム業界においてキャラクターや背景などのデザインを手掛けたりするのが主な仕事です。クライアントの要望をベースとした企画やコンセプトをもとに、訴求すべきターゲット層にマッチするデザインを考案することが求められています。",
+      w:"Webデザイナーは、その名の通りWebサイトのデザインを行う仕事です。仕事内容は幅広く、クライアントが求めるWebサイトを作るために、美しいデザインと、機能的な構成を提案し、実際にコーディングまで行います。",
+      gk:"ゲームクリエイターとは、コンピュータゲームのソフトやアプリの制作に携わる人の総称です。 ゲーム制作に関わるゲームクリエーターの仕事は、企画系の仕事、プログラマー、クリエーター系の仕事に大きく分かれます。",
+    }
+
+
+
+    //どのボタンを押しても呼び出される。問題文と選択肢文の更新を行う。あとはテスト表示の点数更新も行う（answerNが先に実行されるので正しく動作する）
+    function transition() {
+      let num = Number(document.getElementById('question_number').textContent);
+      document.getElementById('question_text').textContent = question_text_array[num];//問題文の更新
+      document.getElementById('question_number').textContent = Number(document.getElementById('question_number').textContent) + 1;//問題番号の更新
+    
+      //Q15からは四択なのでanswer1とanswer4のボタンを復活させる
+      if(num==14){
+        document.getElementById('ans1').style.display ="inline";
+        document.getElementById('ans4').style.display ="inline";
+      }
+
+      //Q15からは四択なので選択肢文の更新もする //Q24で更新を止めないとエラーが出て以降のjsが動かないのでnum<24は必須
+      if(num>=14 && num<24){
+        document.getElementById('ans1').textContent =choice_text_array[num-14][0];
+        document.getElementById('ans2').textContent =choice_text_array[num-14][1]; 
+        document.getElementById('ans3').textContent =choice_text_array[num-14][2]; 
+        document.getElementById('ans4').textContent =choice_text_array[num-14][3]; 
+      }
+
+      //最終問題Q24を選択した後の最終結果を辞書型に格納しなおして、昇順にしてtop3を出力する
+      if(num==24){
+        //最終結果を辞書型に格納        
+        var result_array = {nw:0,sb:0,db:0,sk:0,sye:0,p:0,ke:0,te:0,se:0,ds:0,d3:0,ek:0,ui:0,gd:0,w:0,gk:0};
+        result_array["nw"] = point_array[0];
+        result_array["sb"] = point_array[1];
+        result_array["db"] = point_array[2];
+        result_array["sk"] = point_array[3];
+        result_array["sye"] = point_array[4];
+        result_array["p"] = point_array[5];
+        result_array["ke"] = point_array[6];
+        result_array["te"] = point_array[7];
+        result_array["se"] = point_array[8];
+        result_array["ds"] = point_array[9];
+        result_array["d3"] = point_array[10];
+        result_array["ek"] = point_array[11];
+        result_array["ui"] = point_array[12];
+        result_array["gd"] = point_array[13];
+        result_array["w"] = point_array[14];
+        result_array["gk"] = point_array[15];
+        console.log(result_array); //確認
+
+        var keys=[];
+        for(var key in result_array)keys.push(key);
+        function Compare(a,b){
+            return result_array[a]-result_array[b];    
+        }
+        keys.sort(Compare);
+        console.log(keys);//確認
+
+        //結果部分をhtml上に表示する
+        document.getElementById('resultsen').style.display ="inline";
+        
+
+        //top3をhtml上に表示する //「あなたに向いているのは」を消して空白にしました
+        var resultList1 = '';
+        var resultList2 = '';
+        var resultList3 = '';
+
+        //divと
+        for (var i=0; i<3;i++){
+          var j = i+1;
+          if (j==1){
+            resultList1 +=  '<input type="radio" id="result1" name="answer" value = ' + profession[keys[15-i]] + '><label for = "result1">'+ j + ':'+ profession[keys[15-i]] +'</label>';
+            resultList1 +=  '<details><summary>詳細はこちら</summary><p>' + explation[keys[15-i]] + '</p></details>';
+          }
+          if (j==2){
+            resultList2 +=  '<input type="radio" id="result2" name="answer" value = ' + profession[keys[15-i]] + '><label for = "result2">'+ j + ':'+ profession[keys[15-i]] +'</label>';
+            resultList2 +=  '<details><summary>詳細はこちら</summary><p>' + explation[keys[15-i]] + '</p></details>';
+          }
+          if (j==3){
+            resultList3 +=  '<input type="radio" id="result3" name="answer" value = ' + profession[keys[15-i]] + '><label for = "result3">'+ j + ':'+ profession[keys[15-i]] +'</label>';
+            resultList3 +=  '<details><summary>詳細はこちら</summary><p>' + explation[keys[15-i]] + '</p></details>';
+          }
+       
+        document.getElementById('result1').innerHTML = resultList1;
+        document.getElementById('result2').innerHTML = resultList2;
+        document.getElementById('result3').innerHTML = resultList3;
+        document.getElementById('result4').innerHTML = '<input type="submit" name = "button" value="送信">';
+      }
+        
+        //問題文あたりのhtmlを見えなくする
+        document.getElementById('disappear_after_result').style.display ="none";
+
+      }
+
+
+      //あと何問、のバーの動き
+      var bbb = document.getElementById("bbb");
+      switch(num){
+        case 1:
+          bbb.style.width = '95.83%';
+          break;
+        case 2:
+          bbb.style.width = '91.66%';
+          break;
+        case 3:
+          bbb.style.width = '86.96%';
+          break;
+        case 4:
+          bbb.style.width = '82.79%';
+          break;
+        case 5:
+          bbb.style.width = '78.62%';
+          break;
+        case 6:
+          bbb.style.width = '74.45%';
+          break;
+        case 7:
+          bbb.style.width = '70.28%';
+          break;
+        case 8:
+          bbb.style.width = '66.11%';
+          break;
+        case 9:
+          bbb.style.width = '61.94%';
+          break;
+        case 10:
+          bbb.style.width = '57.77%';
+          break;
+        case 11:
+          bbb.style.width = '53.6%';
+          break;
+        case 12:
+          bbb.style.width = '49.43%';
+          break;
+        case 13:
+          bbb.style.width = '45.26%';
+          break;
+        case 14:
+          bbb.style.width = '41.09%';
+          break;
+        case 15:
+          bbb.style.width = '36.92%';
+          break;
+        case 16:
+          bbb.style.width = '32.75%';
+          break;
+        case 17:
+          bbb.style.width = '28.58%';
+          break;
+        case 18:
+          bbb.style.width = '24.41%';
+          break;
+        case 19:
+          bbb.style.width = '20.24%';
+          break;
+        case 20:
+          bbb.style.width = '16.07%';
+          break;
+        case 21:
+          bbb.style.width = '11.9%';
+          break;
+        case 22:
+          bbb.style.width = '7.73%';
+          break;
+        case 23:
+          bbb.style.width = '3.03%';
+          break;
+        case 24:
+          bbb.style.width = '0%';
+          break;        
+      }
+
+      document.getElementById('nnum').textContent ="あと"+(25-num-1)+"問";
+
+      point_display();
+
+
+    }
+
+    //1を回答したとき
+    function answer1() {
+      let num = Number(document.getElementById('question_number').textContent);
+      switch(num){
+        case 15://sye+2,p+2,ke+2,nw+1,gk+1
+          point_array[8] += 2;
+          point_array[5] += 2;
+          point_array[6] += 2;
+          point_array[0] += 1;
+          point_array[15] += 1;
+          break;
+        case 16://w+1,gd+1
+          point_array[14] += 1;
+          point_array[13] += 1;
+          break;
+        case 17://se+2,3d+2,gk+2
+          point_array[8] += 2;
+          point_array[10] += 2;
+          point_array[15] += 2;
+          break;
+        case 18:// w+4,gd+4,ui+4,ek+3,3d+2
+          point_array[14] += 4;
+          point_array[13] += 4;
+          point_array[12] += 4;
+          point_array[11] += 3;
+          point_array[10] += 2;
+          break;
+        case 19://ek+3,3d+3
+          point_array[11] += 3;
+          point_array[10] += 3;
+          break;
+        case 20://sye+1,se+1
+          point_array[4] += 1;
+          point_array[8] += 1;
+          break;
+        case 21://db+1,ke+1.,3d+1,gd+1,ek+1,nw+1,sb+1,sk+1,,ds+1,te+1
+          point_array[2] += 1;
+          point_array[6] += 1;
+          point_array[10] += 1;
+          point_array[13] += 1;
+          point_array[11] += 1;
+          point_array[0] += 1;
+          point_array[1] += 1;
+          point_array[3] += 1;
+          point_array[9] += 1;
+          point_array[7] += 1;
+          break;
+        case 22://ui+2,ek+2,gd+2.w+2
+          point_array[12] += 2;
+          point_array[11] += 2;
+          point_array[13] += 2;
+          point_array[14] += 2;
+          break;
+        case 23://p+2,te+1
+          point_array[5] += 2;
+          point_array[7] += 1;
+          break;
+        case 24://nw+2,te+2.sk+2,sb+2,p+1
+          point_array[0] += 1;
+          point_array[7] += 1;
+          point_array[3] += 1;
+          point_array[1] += 1;
+          point_array[5] += 1;
+          break;        
+      }
+
+      
+    }
+
+    //2を回答したとき(YESを回答したとき)
+    //MEMO    goal_array = [0"nw",1"sb",2"db",3"sk",4"sye",5"p",6"ke",7"te",8"se",9"ds",10"d3",11"ek",12"ui",13"gd",14"w",15"gk"];
+    function answer2() {
+      let num = Number(document.getElementById('question_number').textContent);
+      switch(num){
+        case 1://nw+1,sb+1,db+1,sk+1,sye+1,ke+1,te+1,ds+1,gk+1
+          point_array[0] += 1;
+          point_array[1] += 1;
+          point_array[2] += 1;
+          point_array[3] += 1;
+          point_array[4] += 1;
+          point_array[6] += 1;
+          point_array[7] += 1;
+          point_array[9] += 1;
+          point_array[15] += 1;
+          break;
+        case 2://ke+1,ek+2,gd+2,ui+2,w+2
+          point_array[6] += 1;
+          point_array[11] += 2;
+          point_array[13] += 2;
+          point_array[12] += 2;
+          point_array[14] += 2;
+          break;
+        case 3://sye+1,3d+1,gd+1
+          point_array[4] += 1;
+          point_array[10] += 1;
+          point_array[13] += 1;
+          break;
+        case 4://nw+1,db+1,se+1,3d+1,ui+1,gd+1
+          point_array[0] += 1;
+          point_array[2] += 1;
+          point_array[8] += 1;
+          point_array[10] += 1;
+          point_array[12] += 1;
+          point_array[13] += 1;
+          break;
+        case 5://sye+2,p+2,w+1
+          point_array[4] += 2;
+          point_array[5] += 2;
+          point_array[14] += 1;
+          break;
+        case 6://nw+2,sb+1,sk+1,te+2,se+2
+          point_array[0] += 2;
+          point_array[1] += 1;
+          point_array[3] += 1;
+          point_array[7] += 2;
+          point_array[8] += 2;
+          break;
+        case 7://sye+1,ke+1,ek+1,ui+1,gd+1,3d+1,gk+1
+          point_array[4] += 1;
+          point_array[6] += 1;
+          point_array[11] += 1;
+          point_array[12] += 1;
+          point_array[13] += 1;
+          point_array[10] += 1;
+          point_array[15] += 1;
+          break;
+        case 8://sye+3,p+3,w+2,gk+2
+          point_array[4] += 3;
+          point_array[5] += 3;
+          point_array[14] += 2;
+          point_array[15] += 2;
+          break;
+        case 9://3d+2,ek+2,ui+2,gd+2,w+2,gk+2
+          point_array[10] += 2;
+          point_array[11] += 2;
+          point_array[12] += 2;
+          point_array[13] += 2;
+          point_array[14] += 2;
+          point_array[15] += 2;
+          break;
+        case 10://3d+1,gk+1,ke+1
+          point_array[10] += 1;
+          point_array[15] += 1;
+          point_array[6] += 1;
+          break;
+        case 11://ds+2,db+2,sk+2,ek+1,ui+1,gd+1
+          point_array[9] += 2;
+          point_array[2] += 2;
+          point_array[3] += 2;
+          point_array[11] += 1;
+          point_array[12] += 1;
+          point_array[13] += 1;
+          break;
+        case 12://nw+2,sb+2,db+2,sk+2,ke+2,te+2,ds+2,se+2
+          point_array[0] += 2;
+          point_array[1] += 2;
+          point_array[2] += 2;
+          point_array[3] += 2;
+          point_array[6] += 2;
+          point_array[7] += 2;
+          point_array[9] += 2;
+          point_array[8] += 2;
+          break;
+        case 13://nw+2,sb+2,db+2,sk+2,te+2,se+2,ds+2,ke+2
+          point_array[0] += 2;
+          point_array[1] += 2;
+          point_array[2] += 2;
+          point_array[3] += 2;
+          point_array[6] += 2;
+          point_array[7] += 2;
+          point_array[9] += 2;
+          point_array[8] += 2;
+          break;
+        case 14://nw+3,sb+5,ke+5,te+4,se+5
+          point_array[0] += 3;
+          point_array[1] += 5;
+          point_array[6] += 5;
+          point_array[7] += 4;
+          point_array[8] += 5;
+          break;
+        case 15://w+1,ui+1,gd+1
+          point_array[14] += 1;
+          point_array[12] += 1;
+          point_array[13] += 1;
+          break;
+        case 16://nw+1,sye+1,ke+1
+          point_array[0] += 1;
+          point_array[4] += 1;
+          point_array[6] += 1;
+          break;
+        case 17:// w+2,gk+2,gd+3,ek+3,3d+3
+          point_array[14] += 2;
+          point_array[15] += 2;
+          point_array[13] += 3;
+          point_array[11] += 3;
+          point_array[10] += 3;
+          break;
+        case 18://p+4,sye+4,gk+2
+          point_array[5] += 4;
+          point_array[4] += 4;
+          point_array[15] += 2;
+          break;
+        case 19://gk+2
+          point_array[15] += 2;
+          break;
+        case 20://db+2,p+2,ds+2,ke+1
+          point_array[2] += 2;
+          point_array[5] += 2;
+          point_array[9] += 2;
+          point_array[6] += 1;
+          break;
+        case 21://gk+1,3d+1
+          point_array[15] += 1;
+          point_array[10] += 1;
+          break;
+        case 22://ds+2,db+2,ke+2,te+2,3d+2,gk+2
+          point_array[9] += 2;
+          point_array[2] += 2;
+          point_array[6] += 2;
+          point_array[7] += 2;
+          point_array[10] += 2;
+          point_array[15] += 2;
+          break;
+        case 23://ke+2,db+1,ds+1,3d+1
+          point_array[6] += 2;
+          point_array[2] += 1;
+          point_array[9] += 1;
+          point_array[10] += 1;
+          break;
+        case 24://p+1,sye+1,ke+1,se+1
+          point_array[5] += 1;
+          point_array[4] += 1;
+          point_array[6] += 1;
+          point_array[8] += 1;
+          break;        
+      }
+      
+    }
+
+    //3を回答したとき(NOを回答したとき)
+    function answer3() {
+      let num = Number(document.getElementById('question_number').textContent);
+      switch(num){
+        /*
+        case 1:
+          break;
+        case 2:
+          break;
+        case 3:
+          break;
+        case 4:
+          break;
+        case 5:
+          break;
+        case 6:
+          break;
+        case 7:
+          break;
+        case 8:
+          break;
+        case 9:
+          break;
+        case 10:
+          break;
+        case 11:
+          break;
+        case 12:
+          break;
+        case 13:
+          break;
+        case 14:
+          break;
+        */
+        case 15://db+1,te+1,ds+1,sb+1,sk+1,3d+1
+          point_array[2] += 1;
+          point_array[7] += 1;
+          point_array[9] += 1;
+          point_array[1] += 1;
+          point_array[3] += 1;
+          point_array[10] += 1;
+          break;
+        case 16://te+3,ds+3,sk+2,p+1.db+2,sb+1,se+2
+          point_array[7] += 3;
+          point_array[9] += 3;
+          point_array[3] += 2;
+          point_array[5] += 1;
+          point_array[2] += 2;
+          point_array[1] += 1;
+          point_array[8] += 2;
+          break;
+        case 17://gk+1,3d+1,ds+1,ke+1,p+2,sk+2,db+2,sb+2
+          point_array[15] += 1;
+          point_array[10] += 1;
+          point_array[9] += 1;
+          point_array[6] += 1;
+          point_array[5] += 2;
+          point_array[3] += 2;
+          point_array[2] += 2;
+          point_array[1] += 3;
+          break;
+        case 18://nw+2,sye+2
+          point_array[0] += 2;
+          point_array[4] += 2;
+          break;
+        case 19://nw+1,p+1,ui+1
+          point_array[0] += 1;
+          point_array[5] += 1;
+          point_array[12] += 1;
+          break;
+        case 20://sb+1,te+2,sk+1
+          point_array[1] += 1;
+          point_array[7] += 2;
+          point_array[3] += 1;
+          break;
+        case 21://sye+1,p+2,ke+1,se+1
+          point_array[1] += 1;
+          point_array[5] += 2;
+          point_array[6] += 1;
+          point_array[8] += 1;
+          break;
+        case 22://sb+2,sk+2,sye+2,se+2,w+2,ek+1
+          point_array[1] += 2;
+          point_array[3] += 2;
+          point_array[4] += 2;
+          point_array[8] += 2;
+          point_array[14] += 2;
+          point_array[11] += 1;
+          break;
+        case 23://gk+2
+          point_array[15] += 2;
+          break;
+        case 24://sb+2,te+1,ek+1,3d+1,ui+1,w+1
+          point_array[1] += 2;
+          point_array[7] += 1;
+          point_array[11] += 1;
+          point_array[10] += 1;
+          point_array[12] += 1;
+          point_array[14] += 1;
+          break;        
+      }
+      
+    }
+
+    //4を回答したとき
+    function answer4() {
+      let num = Number(document.getElementById('question_number').textContent);
+      switch(num){
+        case 15://se+2,3d+1
+          point_array[8] += 2;
+          point_array[10] += 1;
+          break;
+        case 16://w+2,gd+2,ui+2,ek+2
+          point_array[14] += 2;
+          point_array[13] += 2;
+          point_array[12] += 2;
+          point_array[11] += 2;
+          break;
+        case 17://ui+2,nw+1,sye+1,se+1,gd+1,w+1
+          point_array[12] += 2;
+          point_array[0] += 1;
+          point_array[4] += 1;
+          point_array[8] += 1;
+          point_array[13] += 1;
+          point_array[14] += 1;
+          break;
+        case 18://ds+4,db+4,sb+2,sk+4,te+1,se+3
+          point_array[9] += 4;
+          point_array[2] += 4;
+          point_array[1] += 2;
+          point_array[3] += 4;
+          point_array[7] += 1;
+          point_array[8] += 3;
+          break;
+        case 19://sk+2,db+2,ds+2,ui+2,gd+2,ek+1
+          point_array[3] += 2;
+          point_array[2] += 2;
+          point_array[9] += 2;
+          point_array[12] += 2;
+          point_array[13] += 2;
+          point_array[11] += 1;
+          break;
+        case 20://nw+1,sb+1,3d+1,gk+1
+          point_array[0] += 1;
+          point_array[1] += 1;
+          point_array[10] += 1;
+          point_array[15] += 1;
+          break;
+        case 21:
+          break;
+        case 22://nw+2,p+2,ds+1,ui+2
+          point_array[0] += 2;
+          point_array[5] += 2;
+          point_array[9] += 1;
+          point_array[12] += 2;
+          break;
+        case 23://nw+2,sye+2
+          point_array[0] += 2;
+          point_array[4] += 2;
+          break;
+        case 24://ek+2,3d+1,w+1,gk+2
+          point_array[0] += 1;
+          point_array[1] += 1;
+          point_array[10] += 1;
+          point_array[15] += 1;
+          break;        
+      }
+      
+    }
+
+    
+
+  </script>
 </html>
