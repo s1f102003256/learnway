@@ -40,14 +40,7 @@
     //職業項目ごとの得点数を記録・格納する配列
     var point_array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
-    //点数をテスト画面に反映させる関数
-    function point_display(){
-      var stockList = '';
-      for (var i=0; i<point_array.length;i++){
-        stockList += '<li>'+ goal_array[i] + ':'+ point_array[i] +'</li>';
-      } 
-      document.getElementById('stock').innerHTML = stockList;
-    }
+
 
     //問題番号の初期設定
     let now_question_number = 1; //問題番号を格納する変数
