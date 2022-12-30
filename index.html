@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body onload="point_display();">
+    <div class="container">
+      <div id="header">
+        <img src="{% static 'img/logo.png' %}" width="20%" id="header_logo">
+      </div>
+      
+      <div id="disappear_after_result">
+
+        <p id="question_number">b</p>
+
+
+        <p id="question_text">Q1.地道な努力は比較的得意だ</p>
+        
+        <div id="choice">
+          <button onclick="answer1();transition()" id="ans1" class="btn btn1">選択肢1</button>
+          <button onclick="answer2();transition()" id="ans2" class="btn btn2">YES</button>
+          <button onclick="answer3();transition()" id="ans3" class="btn btn3">NO</button>
+          <button onclick="answer4();transition()" id="ans4" class="btn btn4">選択肢4</button>
+        </div>
+
+        <div id="vvv">
+        <div class="example3">
+          <div id="bbb"></div>
+        </div>
+        </div>
+        
+
+        <div id="nokori">
+          <p id="nnum" class="white">あと24問</p>
+        </div>
+
+      </div>
+
+      <div id="resultsen">
+        <div id="resultsendiv">
+          <p class="white">あなたに向いているIT職をリストアップしました<br>以下の職種の中から1つ選んでください</p>
+        </div>
+
+        <div id="resultchoicediv">
+          <form action="{% url 'senior' %}" method="POST" class="form">
+            {% csrf_token %}
+            <div id="result1" class="resultchoice"></div>
+            <div id="result2" class="resultchoice"></div>
+            <div id="result3" class="resultchoice"></div>
+            <div id="result4" ></div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+
+  <div id="footer">
+    <img src="{% static 'img/logo_sen.png' %}" width="40%" id="footer_logo">
+  </div>
+  </body>
