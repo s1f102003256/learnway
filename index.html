@@ -261,15 +261,15 @@
           var j = i+1;
           if (j==1){
             resultList1 +=  '<input type="radio" id="result1" name="answer" value = ' + profession[keys[15-i]] + '><label for = "result1">'+ j + ':'+ profession[keys[15-i]] +'</label>';
-            resultList1 +=  '<details><summary>詳細はこちら</summary><p>' + explation[keys[15-i]] + '</p></details>';
+            resultList1 +=  '<font color="white"><details><summary>詳細はこちら</summary><p>' + explation[keys[15-i]] + '</p></details></font>';
           }
           if (j==2){
             resultList2 +=  '<input type="radio" id="result2" name="answer" value = ' + profession[keys[15-i]] + '><label for = "result2">'+ j + ':'+ profession[keys[15-i]] +'</label>';
-            resultList2 +=  '<details><summary>詳細はこちら</summary><p>' + explation[keys[15-i]] + '</p></details>';
+            resultList2 +=  '<font color="white"><details><summary>詳細はこちら</summary><p>' + explation[keys[15-i]] + '</p></details></font>';
           }
           if (j==3){
             resultList3 +=  '<input type="radio" id="result3" name="answer" value = ' + profession[keys[15-i]] + '><label for = "result3">'+ j + ':'+ profession[keys[15-i]] +'</label>';
-            resultList3 +=  '<details><summary>詳細はこちら</summary><p>' + explation[keys[15-i]] + '</p></details>';
+            resultList3 +=  '<font color="white"><details><summary>詳細はこちら</summary><p>' + explation[keys[15-i]] + '</p></details></font>';
           }
        
         document.getElementById('result1').innerHTML = resultList1;
