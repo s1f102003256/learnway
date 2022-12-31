@@ -335,7 +335,8 @@ html{
     font-size: 1.5em;
     margin-bottom: 3%;
     border: none;
-    border-radius:90px;
+    border-radius:2em;
+    padding: 1%;
 
     /*
     padding-top: 2%;
