@@ -327,6 +327,7 @@ html{
 #resultsendiv{
     text-align: center;
     font-size: 2em;
+    margin-top: 2%;
 }
 
 .resultchoice{
@@ -337,6 +338,7 @@ html{
     border: none;
     border-radius:2em;
     padding: 1%;
+    margin-left: 25%;
 
     /*
     padding-top: 2%;
@@ -346,6 +348,7 @@ html{
 
 #resultchoicediv{
     text-align: center;
+    margin-top: 2%;
 }
 
 .form{
